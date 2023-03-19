@@ -4,6 +4,18 @@ DEVELOPED WITH OPENAI'S GPT 3.5 TURBO
 COPYRIGHT (C) GAVIN R. ISGAR 2023
 */
 
+// Define and handle creating our user-interface in Electron
+const {BrowserWindow, app} = require("electron");
+const createWindow = () => {
+    const win = new BrowserWindow({
+        width: 1000,
+        height: 800
+    });
+    win.loadFile("./index.html");
+}
+app.whenReady().then(() => {
+    createWindow();
+})
 // Get user input to pass through the sendCall() function; testing purposes only
 const linebyline = require("linebyline");
 let read = linebyline(process.stdin);
