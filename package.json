@@ -1,0 +1,16 @@
+{
+  "name": "project-pistonslap",
+  "version": "0.0.1",
+  "description": "Program developed to test new GPT 3.5 Turbo capabilities",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gavin R. Isgar",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "linebyline": "^1.3.0",
+    "openai": "^3.2.1"
+  }
+}
