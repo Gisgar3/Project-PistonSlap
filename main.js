@@ -55,7 +55,13 @@ const sendChatCall = (input) => {
 const sendVINCall = (vin) => {
     fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvalues/${vin}?format=json`)
         .then((response) => response.json())
-        .then((data) => console.log(`${data.Results[0].ModelYear} ${data.Results[0].Make} ${data.Results[0].Model}`));
+        .then((data) => {
+            for(info in data.Results[0]) {
+                if (data.Results[0][info] != "") {
+                    console.log(data.Results[0][info]);
+                }
+            }
+        });
 };
 
 /* *** IMPORTANT NOTES ***
