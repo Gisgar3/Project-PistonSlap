@@ -4,6 +4,8 @@ DEVELOPED WITH OPENAI'S GPT 3.5 TURBO
 COPYRIGHT (C) GAVIN R. ISGAR 2023
 */
 
+// Useful libraries
+
 // Define and handle creating our user-interface in Electron
 const {BrowserWindow, app, ipcMain} = require("electron");
 const createWindow = () => {
@@ -20,9 +22,10 @@ app.whenReady().then(() => {
 // Get user input to pass through the sendCall() function; testing purposes only
 const linebyline = require("linebyline");
 let read = linebyline(process.stdin);
-
+console.log("| INPUT VEHICLE VIN |");
 read.on("line", (line, lineCount, byteCount) => {
-    sendCall(line);
+    //sendChatCall(line);
+    sendVINCall(line);
 });
 
 // Require the .env file that contains all of our important API keys
@@ -36,7 +39,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 // Create a ChatCompletion call to the API. Since it's async, we must wait for a response before doing anything else
-const sendCall = (input) => {
+const sendChatCall = (input) => {
     const request = openai.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: [
@@ -45,9 +48,15 @@ const sendCall = (input) => {
         ]
     }).then((response) => {
         console.log(`${response.data.choices[0].message.content}\n`);
-        document.getElementById("response").innerText == response.data.choices[0].message.content;
+        //document.getElementById("response").innerText == response.data.choices[0].message.content;
     });
 }
+
+const sendVINCall = (vin) => {
+    fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvalues/${vin}?format=json`)
+        .then((response) => response.json())
+        .then((data) => console.log(`${data.Results[0].ModelYear} ${data.Results[0].Make} ${data.Results[0].Model}`));
+};
 
 /* *** IMPORTANT NOTES ***
 
