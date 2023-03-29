@@ -5,7 +5,7 @@ COPYRIGHT (C) GAVIN R. ISGAR 2023
 */
 
 // Define and handle creating our user-interface in Electron
-const {BrowserWindow, app} = require("electron");
+const {BrowserWindow, app, ipcMain} = require("electron");
 const createWindow = () => {
     const win = new BrowserWindow({
         width: 1000,
@@ -14,8 +14,9 @@ const createWindow = () => {
     win.loadFile("./index.html");
 }
 app.whenReady().then(() => {
-    createWindow();
+    //createWindow();
 })
+
 // Get user input to pass through the sendCall() function; testing purposes only
 const linebyline = require("linebyline");
 let read = linebyline(process.stdin);
@@ -42,7 +43,10 @@ const sendCall = (input) => {
             {"role": "system", "content": "You help troubleshoot and diagnose vehicle problems."},
             {"role": "user", "content": input}
         ]
-    }).then((response) => {console.log(`${response.data.choices[0].message.content}\n`)});
+    }).then((response) => {
+        console.log(`${response.data.choices[0].message.content}\n`);
+        document.getElementById("response").innerText == response.data.choices[0].message.content;
+    });
 }
 
 /* *** IMPORTANT NOTES ***
