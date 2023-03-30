@@ -2,7 +2,7 @@
   "name": "project-pistonslap",
   "version": "0.0.1",
   "description": "Program developed to test new GPT 3.5 Turbo capabilities",
-  "main": "main.js",
+  "main": "./src/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron ."

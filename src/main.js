@@ -13,7 +13,7 @@ const createWindow = () => {
         width: 1000,
         height: 800
     });
-    win.loadFile("./index.html");
+    win.loadFile("./src/views/index.html");
 }
 app.whenReady().then(() => {
     //createWindow();
