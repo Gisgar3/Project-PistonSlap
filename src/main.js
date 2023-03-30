@@ -14,10 +14,10 @@ const createWindow = () => {
         height: 800
     });
     win.loadFile("./src/views/index.html");
-}
+};
 app.whenReady().then(() => {
-    //createWindow();
-})
+    createWindow();
+});
 
 // Get user input to pass through the sendCall() function; testing purposes only
 const linebyline = require("linebyline");
