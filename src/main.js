@@ -5,6 +5,12 @@ COPYRIGHT (C) GAVIN R. ISGAR 2023
 */
 
 // Useful libraries
+const fs = require("fs");
+const path = require("path");
+
+// Check if user logged in for the first time ever
+let readUserData = fs.readFileSync(path.resolve(__dirname, "./user/user-data.json"), {encoding: "utf-8", flag: "r"}).toString();
+let initialCheck = JSON.parse(readUserData);
 
 // Define and handle creating our user-interface in Electron
 const {BrowserWindow, app, ipcMain} = require("electron");
@@ -13,7 +19,12 @@ const createWindow = () => {
         width: 1000,
         height: 800
     });
-    win.loadFile("./src/views/index.html");
+    if (initialCheck.firstLogin == 0) {
+        win.loadFile(path.resolve(__dirname, "./views/index.html"));
+    }
+    else {
+        
+    }
 };
 app.whenReady().then(() => {
     createWindow();
@@ -33,6 +44,7 @@ require("dotenv").config();
 
 // Using OpenAI's Node.js module to make calls to the API; here we just require it and create a configuration
 const {Configuration, OpenAIApi} = require("openai");
+const { fsync, readFileSync } = require("original-fs");
 const configuration = new Configuration({
     apiKey: process.env.API_KEY
 });
