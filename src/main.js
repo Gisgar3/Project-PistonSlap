@@ -44,7 +44,6 @@ require("dotenv").config();
 
 // Using OpenAI's Node.js module to make calls to the API; here we just require it and create a configuration
 const {Configuration, OpenAIApi} = require("openai");
-const { fsync, readFileSync } = require("original-fs");
 const configuration = new Configuration({
     apiKey: process.env.API_KEY
 });
