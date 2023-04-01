@@ -1,0 +1,14 @@
+@font-face {
+    font-family: "Mona Sans";
+    src: url("../fonts/Mona-Sans/Mona-Sans.woff2") format('woff2');
+}
+@font-face {
+    font-family: "Hubot Sans";
+    src: url("../fonts/Hubot-Sans/Hubot-Sans.woff2") format('woff2');
+}
+
+h1 {
+    font-family: "Mona Sans";
+    font-size: 65pt;
+    font-stretch: 125%;
+}

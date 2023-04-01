@@ -4,6 +4,14 @@ DEVELOPED WITH OPENAI'S GPT 3.5 TURBO
 COPYRIGHT (C) GAVIN R. ISGAR 2023
 */
 
+// Useful libraries
+const fs = require("fs");
+const path = require("path");
+
+// Check if user logged in for the first time ever
+let readUserData = fs.readFileSync(path.resolve(__dirname, "./user/user-data.json"), {encoding: "utf-8", flag: "r"}).toString();
+let initialCheck = JSON.parse(readUserData);
+
 // Define and handle creating our user-interface in Electron
 const {BrowserWindow, app, ipcMain} = require("electron");
 const createWindow = () => {
@@ -11,18 +19,24 @@ const createWindow = () => {
         width: 1000,
         height: 800
     });
-    win.loadFile("./index.html");
-}
+    if (initialCheck.firstLogin == 0) {
+        win.loadFile(path.resolve(__dirname, "./views/index.html"));
+    }
+    else {
+        
+    }
+};
 app.whenReady().then(() => {
-    //createWindow();
-})
+    createWindow();
+});
 
 // Get user input to pass through the sendCall() function; testing purposes only
 const linebyline = require("linebyline");
 let read = linebyline(process.stdin);
-
+console.log("| INPUT VEHICLE VIN |");
 read.on("line", (line, lineCount, byteCount) => {
-    sendCall(line);
+    //sendChatCall(line);
+    sendVINCall(line);
 });
 
 // Require the .env file that contains all of our important API keys
@@ -30,13 +44,14 @@ require("dotenv").config();
 
 // Using OpenAI's Node.js module to make calls to the API; here we just require it and create a configuration
 const {Configuration, OpenAIApi} = require("openai");
+const { fsync, readFileSync } = require("original-fs");
 const configuration = new Configuration({
     apiKey: process.env.API_KEY
 });
 const openai = new OpenAIApi(configuration);
 
 // Create a ChatCompletion call to the API. Since it's async, we must wait for a response before doing anything else
-const sendCall = (input) => {
+const sendChatCall = (input) => {
     const request = openai.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: [
@@ -45,9 +60,21 @@ const sendCall = (input) => {
         ]
     }).then((response) => {
         console.log(`${response.data.choices[0].message.content}\n`);
-        document.getElementById("response").innerText == response.data.choices[0].message.content;
+        //document.getElementById("response").innerText == response.data.choices[0].message.content;
     });
 }
+
+const sendVINCall = (vin) => {
+    fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvalues/${vin}?format=json`)
+        .then((response) => response.json())
+        .then((data) => {
+            for(info in data.Results[0]) {
+                if (data.Results[0][info] != "") {
+                    console.log(data.Results[0][info]);
+                }
+            }
+        });
+};
 
 /* *** IMPORTANT NOTES ***
 
