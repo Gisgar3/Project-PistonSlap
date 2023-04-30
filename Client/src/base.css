@@ -1,0 +1,33 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,body{
+    margin: 0;
+    padding: 0;
+}
+
+/* root for varaibles */
+
+:root{
+    --background: #181818;
+    --heading: #f74532;
+    --small-text: #666666;
+    --text: #ffffff;
+}
+
+.btn{
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--heading);
+    background-color: var(--background);
+    border-radius: 0.5rem;
+    color: var(--heading);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+    font-family: 'Roboto', sans-serif;
+}

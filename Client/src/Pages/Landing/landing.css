@@ -1,0 +1,57 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,body{
+    margin: 0;
+    padding: 0;
+    
+}
+
+h1,h2,h3,h4,h5,h6{
+    color: var(--heading);
+    font-family: 'Roboto', sans-serif;
+}
+
+html {
+    height: 100%;
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    overflow: hidden;
+  }
+  
+.star {
+    position: absolute;
+    /* background-image: url("../../../public/wrench.png"); */
+    border-radius: 50%;
+    z-index: 1;
+    transition: margin 2s ease-in-out;
+}
+
+.container{
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.container > *{
+    z-index: 2;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.container h1{
+    font-size: 3rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: var(--text)
+}
